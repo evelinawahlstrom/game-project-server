@@ -2,10 +2,9 @@ const { Router } = require("express");
 const { toJWT } = require("./jwt");
 const bcrypt = require("bcryptjs");
 const User = require("../user/model");
-const authMiddleWare = require("./middleware");
 const router = new Router();
 
-router.post("/home", authMiddleWare, (req, res) => {
+router.post("/login", (req, res) => {
   if (!req.body.name || !req.body.password) {
     return res
       .status(400)

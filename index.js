@@ -4,9 +4,11 @@ const db = require('./db')
 const bodyParser = require('body-parser')
 const userRouter = require ('./user/router')
 const cors = require ('cors')
+const authRouter = require("./auth/router");
+
 const app = express();
 const port = process.env.PORT || 4000;
-const authRouter = require("./auth/router");
+
 
 
 //const User = require ('./user/model')
