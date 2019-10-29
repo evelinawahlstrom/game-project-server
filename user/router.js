@@ -10,7 +10,7 @@ router.post("/home", (req, res, next) => {
   const name = req.body.name
   const password = req.body.password
   if (!name || !password) {
-      res.status(400).send({
+      res.status(409).send({
           message: "Please supply a valid name and password"
       })   
   }else{
