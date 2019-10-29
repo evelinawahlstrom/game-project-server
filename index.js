@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const userRouter = require ('./user/router')
 const cors = require ('cors')
 const authRouter = require("./auth/router");
-
+const streamRouter = require('./stream/router')
 const app = express();
 const port = process.env.PORT || 4000;
 
@@ -21,6 +21,7 @@ const corsMiddleware = cors()
 app
 .use(corsMiddleware)
 .use(jsonMiddleware)
+.use(streamRouter)
 .use(userRouter)
 .use(authRouter)
 
