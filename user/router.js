@@ -1,17 +1,27 @@
 const { Router } = require("express");
 const User = require("./model");
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcryptjs');
 
 const router = new Router();
 
-router.post("/", (req, res, next) => {
-    console.log("what is req.body?", req.body)
-  User.create({
-    name: req.body.name,
-    password: bcrypt.hashSync(req.body.password, 10) 
-  })
-    .then(() => res.status(201).send({ message: "User created succesfully" }))
-    .catch(next);
-});
 
+router.post("/home", (req, res, next) => {
+  console.log("A req on /user")
+  const name = req.body.name
+  const password = req.body.password
+  if (!name || !password) {
+      res.status(400).send({
+          message: "Please supply a valid name and password"
+      })   
+  }else{
+      User.create({
+          name: name,
+          password: bcrypt.hashSync(req.body.password, 10)
+      })
+      .then(user => {
+          res.status(201)
+          res.send({status:"OK"})
+      } )
+  }
+})
 module.exports = router;
