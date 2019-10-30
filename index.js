@@ -8,10 +8,7 @@ const authRouter = require("./auth/router");
 const streamRouter = require('./stream/router')
 const app = express();
 const port = process.env.PORT || 4000;
-
-
-
-//const User = require ('./user/model')
+const Move = require('./moves/model')
 
 // middleware
 const jsonMiddleware = bodyParser.json()
@@ -24,7 +21,7 @@ app
 .use(streamRouter)
 .use(userRouter)
 .use(authRouter)
-
+.use(Move)
 
 app
 .listen(port, () => console.log(`Example app listening on port ${port}!`));
