@@ -3,7 +3,6 @@ const { toJWT } = require("./jwt");
 const bcrypt = require("bcryptjs");
 const User = require("../user/model");
 const router = new Router();
-​
 router.post("/login", (req, res) => {
   if (!req.body.name || !req.body.password) {
     return res
@@ -37,5 +36,4 @@ router.post("/login", (req, res) => {
       });
     });
 });
-​
 module.exports = router;

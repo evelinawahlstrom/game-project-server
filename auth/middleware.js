@@ -1,7 +1,6 @@
 const User = require("../user/model");
-const { toData } = require("./jwt");
-​
-​
+const { toData } = require('./jwt')
+
 function authMiddleWare(req, res, next) {
   const auth =
     req.headers.authorization && req.headers.authorization.split(" ");

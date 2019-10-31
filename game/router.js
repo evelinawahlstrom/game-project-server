@@ -1,19 +1,24 @@
-const { Router } = require("express");
-const Game = require("./model");
+const { Router } = require('express')
+const Game = require ('./model')
 const authMiddleWare = require ('../auth/middleware')
-/// const Move = require ('../move/router') ???
 
-const router = new Router()
 
-/// should this game req be in the stream/router.js file?
+function gameFactory (update) {
+  const router = new Router()
 
-/// start a new game??
-/// need the authMiddleWare here???
-router.post('/game', authMiddleWare, (req, res, next) => {
+  router.get('/games', (req, res, next) => {
+    Games.findAll()
+    .then(games => {
+      res.send(games)
+    })
+    .catch(next)
+  })
+  
+  router.post('/games', authMiddleWare, (req, res, next) => {
     const newGame = {
       players: [{
-         first_player_id: req.body.first_player_id, 
-         second_player_id: req.body.second_player_id
+          first_player_id: req.body.first_player_id, 
+          second_player_id: req.body.second_player_id
       }],
       game_id: req.body.game_id, 
       game_status: req.body.game_status, 
@@ -27,16 +32,20 @@ router.post('/game', authMiddleWare, (req, res, next) => {
       .catch(next)
   })
 
-  router.put('/game/:id', (req, res, next) => {
-    const id = req.params.id
-    const updatedGame = req.body 
+  router.get('/games', (req, res, next) => {
+    Game.findByPk(req.params.gameId)
+      .then(game => {
+        res.send(game);
+      })
+      .catch(next);
+  });
 
-    // Moves.findAll(), where gameID = ??
-    .catch(next)
-  })
+  // router.put('/game/:id', async (req, res, next) => {
+  //   /// update game, where move has been done 
+    
+  // })
 
+  return router 
+}
 
-//update the result, and each play: who is the winner? is it a tie?
-
-
-module.exports = router; 
+module.exports = gameFactory; 
