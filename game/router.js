@@ -1,23 +1,28 @@
-const { Router } = require("express");
-const Game = require("./model");
+const { Router } = require('express')
+const Game = require ('./model')
 const authMiddleWare = require ('../auth/middleware')
-/// const Move = require ('../move/router') ???
 
-const router = new Router()
 
-/// should this game req be in the stream/router.js file?
-
-/// start a new game??
-/// need the authMiddleWare here???
-router.post('/game', authMiddleWare, (req, res, next) => {
+function gameFactory (update) {
+  const router = new Router()
+//before stream 
+  // router.get('/games', (req, res, next) => {
+  //   Games.findAll()
+  //   .then(games => {
+  //     res.send(games)
+  //   })
+  //   .catch(next)
+  // })
+  
+  router.post('/games', authMiddleWare, (req, res, next) => {
+    console.log("my id", req.user.id)
     const newGame = {
       players: [{
-         first_player_id: req.body.first_player_id, 
-         second_player_id: req.body.second_player_id
+          first_player_id: req.user.id,
+          second_player_id: null, 
       }],
-      game_id: req.body.game_id, 
-      game_status: req.body.game_status, 
-      turn: req.body.turn  
+      game_status: "New Game",
+      turn: req.user.id 
     }
     console.log(newGame) 
     Game.create(newGame)
@@ -27,16 +32,20 @@ router.post('/game', authMiddleWare, (req, res, next) => {
       .catch(next)
   })
 
-  router.put('/game/:id', (req, res, next) => {
-    const id = req.params.id
-    const updatedGame = req.body 
+  // router.get('/games/:id', (req, res, next) => {
+  //   Game.findByPk(req.params.id)
+  //     .then(game => {
+  //       res.send(game);
+  //     })
+  //     .catch(next);
+  // });
 
-    // Moves.findAll(), where gameID = ??
-    .catch(next)
-  })
+  // router.put('/game/:id', async (req, res, next) => {
+  //   /// update game, where move has been done 
+    
+  // })
 
+  return router 
+}
 
-//update the result, and each play: who is the winner? is it a tie?
-
-
-module.exports = router; 
+module.exports = gameFactory; 
