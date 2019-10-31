@@ -5,6 +5,7 @@ const authMiddleWare = require ('../auth/middleware')
 
 function gameFactory (update) {
   const router = new Router()
+
 //before stream 
   // router.get('/games', (req, res, next) => {
   //   Games.findAll()
@@ -13,6 +14,7 @@ function gameFactory (update) {
   //   })
   //   .catch(next)
   // })
+
   
   router.post('/games', authMiddleWare, (req, res, next) => {
     console.log("my id", req.user.id)
@@ -39,6 +41,7 @@ function gameFactory (update) {
   //     })
   //     .catch(next);
   // });
+
 
   // router.put('/game/:id', async (req, res, next) => {
   //   /// update game, where move has been done 
