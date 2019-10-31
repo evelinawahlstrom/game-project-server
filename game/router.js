@@ -15,14 +15,14 @@ function gameFactory (update) {
   })
   
   router.post('/games', authMiddleWare, (req, res, next) => {
+    console.log("my id", req.user.id)
     const newGame = {
       players: [{
-          first_player_id: req.body.first_player_id, 
-          second_player_id: req.body.second_player_id
+          first_player_id: req.user.id,
+          second_player_id: null, 
       }],
-      game_id: req.body.game_id, 
-      game_status: req.body.game_status, 
-      turn: req.body.turn  
+      game_status: "New Game",
+      turn: req.user.id 
     }
     console.log(newGame) 
     Game.create(newGame)
@@ -33,7 +33,7 @@ function gameFactory (update) {
   })
 
   router.get('/games', (req, res, next) => {
-    Game.findByPk(req.params.gameId)
+    Game.findByPk(req.params.id)
       .then(game => {
         res.send(game);
       })
