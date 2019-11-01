@@ -6,13 +6,15 @@ const authMiddleWare = require ('../auth/middleware')
 function gameFactory (update) {
   const router = new Router()
 
-  router.get('/games', (req, res, next) => {
-    Games.findAll()
-    .then(games => {
-      res.send(games)
-    })
-    .catch(next)
-  })
+//before stream 
+  // router.get('/games', (req, res, next) => {
+  //   Games.findAll()
+  //   .then(games => {
+  //     res.send(games)
+  //   })
+  //   .catch(next)
+  // })
+
   
   router.post('/games', authMiddleWare, (req, res, next) => {
     console.log("my id", req.user.id)
@@ -32,13 +34,14 @@ function gameFactory (update) {
       .catch(next)
   })
 
-  router.get('/games', (req, res, next) => {
-    Game.findByPk(req.params.id)
-      .then(game => {
-        res.send(game);
-      })
-      .catch(next);
-  });
+  // router.get('/games/:id', (req, res, next) => {
+  //   Game.findByPk(req.params.id)
+  //     .then(game => {
+  //       res.send(game);
+  //     })
+  //     .catch(next);
+  // });
+
 
   // router.put('/game/:id', async (req, res, next) => {
   //   /// update game, where move has been done 
